@@ -13,7 +13,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool:
-      vmImage: 'ubuntu-21-04-minimal'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: 'Build and push the image to container registry'
