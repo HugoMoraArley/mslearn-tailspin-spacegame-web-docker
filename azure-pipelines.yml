@@ -4,6 +4,7 @@ trigger:
 variables: 
   webRepository: 'web'
   tag: '$(Build.BuildId)'
+  WebAppName: 'tailspin-space-game-web-30593' 
 
 stages:
 - stage: 'Build'
