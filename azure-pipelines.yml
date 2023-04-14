@@ -37,8 +37,17 @@ stages:
    
     
     steps:
-    - task: AzureWebAppContainer@1
+    #- task: AzureWebAppContainer@1
+    #  inputs:
+    #   appName: $(WebAppName)
+    #   azureSubscription: 'Resource Manager - Tailspin - Space Game'
+    #   imageName: $(RegistryName)/$(webRepository):$(build.buildId)
+
+    - task: AzureCLI@2
+      displayName: 'Deploy to web app'
       inputs:
-       appName: $(WebAppName)
-       azureSubscription: 'Resource Manager - Tailspin - Space Game'
-       imageName: $(RegistryName)/$(webRepository):$(build.buildId)
+        azureSubscription: '$(ServiceConnection)'
+        scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: |
+          az webapp config container set --name "$(WebAppName)" --resource-group "$(ResourceGroupName)" --multicontainer-config-file "$(Pipeline.Workspace)/path/to/docker-compose.yml" --multicontainer-config-type COMPOSE --slot "$(WebAppDeploySlotName)"
