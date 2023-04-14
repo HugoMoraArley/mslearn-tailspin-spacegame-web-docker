@@ -15,7 +15,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-20.04'
     steps:
     - task: Docker@2
       displayName: 'Build and push the image to container registry'
@@ -36,19 +36,11 @@ stages:
     displayName: 'Deploy job'
     pool:
       vmImage: 'ubuntu-20.04'
-   
-    
-    steps:
-    #- task: AzureWebAppContainer@1
-    #  inputs:
-    #   appName: $(WebAppName)
-    #   azureSubscription: 'Resource Manager - Tailspin - Space Game'
-    #   imageName: $(RegistryName)/$(webRepository):$(build.buildId)
-
+    steps:   
     - task: AzureCLI@2
       displayName: 'Deploy to web app'
       inputs:
-        azureSubscription: '$(ServiceConnection)'
+        azureSubscription: $(ServiceConnection)
         scriptType: pscore
         scriptLocation: inlineScript
-        inlineScript: az webapp config container set --name "$(WebAppName)" --resource-group "$(ResourceGroupName)" 
+        inlineScript: az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName) 
