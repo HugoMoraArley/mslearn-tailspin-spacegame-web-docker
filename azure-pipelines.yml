@@ -46,7 +46,7 @@ stages:
     - task: AzureCLI@2
       displayName: 'Deploy to web app'
       inputs:
-        azureSubscription: '$(ServiceConnection)'
+        azureSubscription: 'Resource Manager - Tailspin - Space Game'
         scriptType: pscore
         scriptLocation: inlineScript
         inlineScript: |
