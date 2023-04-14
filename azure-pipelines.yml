@@ -52,4 +52,4 @@ stages:
         scriptType: pscore
         scriptLocation: inlineScript
         inlineScript: |
-          az webapp config container set --name "$(WebAppName)" --resource-group "$(ResourceGroupName)" --multicontainer-config-file "$(Pipeline.Workspace)/path/to/docker-compose.yml" --multicontainer-config-type COMPOSE --slot "$(WebAppDeploySlotName)"
+          az webapp config container set --name "$(WebAppName)" --resource-group "$(ResourceGroupName)" --multicontainer-config-file "$(Pipeline.Workspace)/path/to/docker-compose.yml" --multicontainer-config-type COMPOSE"
