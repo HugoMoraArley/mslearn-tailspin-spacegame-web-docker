@@ -5,6 +5,8 @@ variables:
   webRepository: 'web'
   tag: '$(Build.BuildId)'
   WebAppName: 'tailspin-space-game-web-30593' 
+  ResourceGroupName: 'tailspin-space-game-rg'
+  ServiceConnection: 'Resource Manager - Tailspin - Space Game'
 
 stages:
 - stage: 'Build'
@@ -46,7 +48,7 @@ stages:
     - task: AzureCLI@2
       displayName: 'Deploy to web app'
       inputs:
-        azureSubscription: 'Resource Manager - Tailspin - Space Game'
+        azureSubscription: '$(ServiceConnection)'
         scriptType: pscore
         scriptLocation: inlineScript
         inlineScript: |
