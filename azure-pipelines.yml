@@ -37,10 +37,16 @@ stages:
     pool:
       vmImage: 'ubuntu-20.04'
     steps:   
-    - task: AzureCLI@2
-      displayName: 'Deploy to web app'
+    #- task: AzureCLI@2
+    #  displayName: 'Deploy to web app'
+    #  inputs:
+    #    azureSubscription: $(ServiceConnection)
+    #    scriptType: 'pscore'
+    #    scriptLocation: 'inlineScript'
+    #    inlineScript: 'az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName)'
+    - task: AzureWebAppContainer@1
       inputs:
+        appName: $(WebAppName)
         azureSubscription: $(ServiceConnection)
-        scriptType: 'pscore'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName)'
+        imageName: $(RegistryName)/$(webRepository):$(build.buildId)
+        
