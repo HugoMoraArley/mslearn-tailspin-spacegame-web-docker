@@ -41,6 +41,6 @@ stages:
       displayName: 'Deploy to web app'
       inputs:
         azureSubscription: $(ServiceConnection)
-        scriptType: pscore
-        scriptLocation: inlineScript
-        inlineScript: az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName) 
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName)'
