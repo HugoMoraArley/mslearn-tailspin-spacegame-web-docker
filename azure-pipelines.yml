@@ -4,9 +4,13 @@ trigger:
 variables: 
   webRepository: 'web'
   tag: '$(Build.BuildId)'
-  WebAppName: 'tailspin-space-game-web-30593' 
-  ResourceGroupName: 'tailspin-space-game-rg'
-  ServiceConnection: 'Resource Manager - Tailspin - Space Game'
+  webAppName: 'tailspin-space-game-web-30593' 
+  resourceGroupName: 'tailspin-space-game-rg'
+  azureSubscription: 'Azure subscription 1'
+  buildConfiguration: 'Release'
+  dockerRegistryServiceConnection: 'Container Registry Connection'
+  containerRegistry: 'Resource Manager - Tailspin - Space Game'
+  vmImageName: 'ubuntu-20.04'
 
 stages:
 - stage: 'Build'
@@ -15,7 +19,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: $(vmImageName)
     steps:
     - task: Docker@2
       displayName: 'Build and push the image to container registry'
@@ -24,7 +28,7 @@ stages:
         buildContext: $(Build.Repository.LocalPath)
         repository: $(webRepository)
         dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
-        containerRegistry: 'Container Registry Connection'
+        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
 
@@ -35,7 +39,7 @@ stages:
   - job: 'Deploy'
     displayName: 'Deploy job'
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: $(vmImageName)
     steps:   
     #- task: AzureCLI@2
     #  displayName: 'Deploy to web app'
@@ -46,8 +50,8 @@ stages:
     #    inlineScript: 'az webapp config container set --name $(WebAppName) --resource-group $(ResourceGroupName)'
     - task: AzureWebAppContainer@1
       inputs:
-        appName: $(WebAppName)
-        azureSubscription: $(ServiceConnection)
-        containers: $(RegistryName)/$(webRepository):$(build.buildId)
+        appName: $(webAppName)
+        azureSubscription: $(azureSubscription)
+        imageName: '$(containerRegistry)/$(webRepository):$(tag)'
         
         
