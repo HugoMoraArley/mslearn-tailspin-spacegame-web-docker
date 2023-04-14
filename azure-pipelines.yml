@@ -48,5 +48,6 @@ stages:
       inputs:
         appName: $(WebAppName)
         azureSubscription: $(ServiceConnection)
-        imageName: $(RegistryName)/$(webRepository):$(build.buildId)
+        containers: $(RegistryName)/$(webRepository):$(build.buildId)
+        
         
